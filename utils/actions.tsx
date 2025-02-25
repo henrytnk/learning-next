@@ -15,6 +15,8 @@ export const sendEmail = async (formData: FormData) => {
   'use server'
   // const rawData = Object.fromEntries(formData);
 
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
   const newEmail: Email = {
     id: uuid(),
     firstName: formData.get('firstName') as string,

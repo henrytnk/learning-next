@@ -1,6 +1,8 @@
 'use client'
 
 import { sendEmail } from "@/utils/actions";
+import { useFormStatus } from "react-dom";
+import { BeatLoader } from "react-spinners";
 
 const formStyle = "flex flex-col gap-4 w-[400px] mx-auto";
 const buttonStyle = "flex items-center justify-center p-2 rounded-md bg-blue-700 transition hover:bg-blue-400";
@@ -13,9 +15,19 @@ const Form = () => {
       <input type="text" name="lastName" required className={inputStyle} placeholder='Last Name' />
       <input type="text" name="email" required className={inputStyle} placeholder='Email Address' />
       <textarea name="message" id="message" className={inputStyle} required placeholder="Message"></textarea>
-      <button className={buttonStyle} type="submit">Send</button>
+      <SubmitButton />
     </form>
   )
+}
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    pending ?
+      <BeatLoader color={'#fff'} /> :
+      <button className={buttonStyle} type="submit" disabled={pending} >Send</button>
+  );
 }
 
 export default Form
