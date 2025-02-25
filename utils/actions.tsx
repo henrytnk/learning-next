@@ -11,7 +11,7 @@ interface Email {
   message: string;
 }
 
-export const sendEmail = async (formData: FormData) => {
+export const sendEmail = async (prevData: any, formData: FormData) => {
   'use server'
   // const rawData = Object.fromEntries(formData);
 
@@ -28,7 +28,12 @@ export const sendEmail = async (formData: FormData) => {
   console.log(`Sending email from '${newEmail.email}'.`)
   console.log(newEmail)
 
-  await saveEmail(newEmail);
+  try {
+    await saveEmail(newEmail);
+    return { message: "Your email was successfully sent!" }
+  } catch (error) {
+    return { message: 'There was an error sending your email.' }
+  }
 }
 
 export const fetchEmails = async (): Promise<Email[]> => {
